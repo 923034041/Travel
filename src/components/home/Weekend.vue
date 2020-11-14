@@ -16,26 +16,37 @@
 
 <script>
 import Panel from '../core/panel.vue'
+import { mapState } from 'vuex'
 export default {
   components: {
     Panel
   },
   data () {
     return {
+      lastCity: '',
       weekendList: []
     }
   },
+  computed: {
+    ...mapState(['city'])
+  },
   methods: {
     async getHomeRecomend () {
-      const { data: res } = await this.$http.get('/mock/index.json')
+      const { data: res } = await this.$http.get('/mock/index.json?city=' + this.city)
       if (res.ret && res.data) {
         this.weekendList = res.data.weekendList
-        console.log(this.weekendList)
       }
     }
   },
   mounted () {
+    this.lastCity = this.city
     this.getHomeRecomend()
+  },
+  activated () {
+    if (this.lastCity !== this.city) {
+      this.lastCity = this.city
+      this.getHomeRecomend()
+    }
   }
 }
 </script>
