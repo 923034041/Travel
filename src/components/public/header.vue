@@ -4,18 +4,22 @@
       <em class="iconfont back-icon">&#xe624;</em>
     </div>
     <div :class="$style.input">内容</div>
-    <div :class="$style.right">城市
+    <router-link to='/city'>
+    <div :class="$style.right">
+      {{this.city}}
       <em class="iconfont arrow-icon">&#xe64a;</em>
     </div>
+    </router-link>
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 // import btn from '@/components/core/btn.vue'
 export default {
   name: 'HomeHeader',
-  components: {
-    // btn
+  computed: {
+    ...mapState(['city'])
   }
 }
 </script>
@@ -23,12 +27,12 @@ export default {
   .back-icon {
     display: block;
       text-align: center;
-      font-size: 40px;
+      font-size: 40px !important;
     }
     .arrow-icon {
         display: inline-block;
         margin-left: -.4px;
-        font-size: 24px;
+        font-size: 24px !important;
     }
 </style>
 
